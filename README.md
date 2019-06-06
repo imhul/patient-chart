@@ -1,4 +1,4 @@
-# Hospitalization Form v.1.0.0
+# Patient Chart v.1.0.0
 
 ### by Tkachuk Zakhar
 
@@ -16,6 +16,7 @@ Based on [`React`](https://reactjs.org/) and [`Parcel Bundler`](https://parceljs
 * `redux-thunk`
 * `antd`
 * `SCSS`
+* `recharts`
 
 ### HOW TO:
 
