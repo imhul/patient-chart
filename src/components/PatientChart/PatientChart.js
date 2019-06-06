@@ -6,7 +6,7 @@ import * as UI_ACTIONS from '../../redux/ui_actions';
 import ReactToPdf from "react-to-pdf";
 import { Table, Button, Icon, } from 'antd';
 import {
-    BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
+    BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from 'recharts';
 
 // Helpers
@@ -148,22 +148,20 @@ class PatientChart extends Component {
                                 <td align="center" valign="middle" className="bRight bBott">200</td>
                                 <td align="center" valign="middle" className="bRight bBott">41</td>
                                 <td colSpan="30" rowSpan="7" align="left" valign="bottom" className="bRight bBott">
-                                    <BarChart
-                                        width={500}
-                                        height={300}
-                                        data={data}
-                                        margin={{
-                                            top: 20, right: 30, left: 20, bottom: 5,
-                                        }}
-                                    >
-                                        <CartesianGrid strokeDasharray="3 3" />
-                                        <XAxis dataKey="name" />
-                                        <YAxis />
-                                        <Tooltip />
-                                        <Legend />
-                                        <Bar dataKey="pv" stackId="a" fill="none" />
-                                        <Bar dataKey="uv" stackId="a" fill="#1890ff" />
-                                    </BarChart>
+                          
+                                        <BarChart
+                                            width={740}
+                                            height={352}
+                                            data={data}
+                                        >
+                                            <CartesianGrid strokeDasharray="3 3" />
+                                
+                                            <Tooltip />
+                            
+                                            <Bar dataKey="pv" stackId="a" fill="none" />
+                                            <Bar dataKey="uv" stackId="a" fill="#1890ff" />
+                                        </BarChart>
+                         
                                 </td>
                             </tr>
                             <tr>
