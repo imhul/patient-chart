@@ -1,11 +1,9 @@
 import { typesUI as types } from './types';
-import testData from '../helpers/testData';
 
 const initState = {
     isInit: false,
-    formData: testData.Data, // FOR TEST ONLY. NEEDED VALUE IS []
-    formOptions: testData.Options, // FOR TEST ONLY. NEEDED VALUE IS []
-    formErrors: testData.Error, // FOR TEST ONLY. NEEDED VALUE IS []
+    formData: [],
+    formOptions: [],
     currentPage: 1,
     isSubmitted: false,
     isPopupVisible: false,

@@ -1,28 +1,28 @@
 // Core
-// import { hot, AppContainer } from 'react-hot-loader';
+import { hot, AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import store from './redux/store';
 
 // Components
-import HospitalizationForm from './components/HospitalizationForm';
+import PatientChart from './components/PatientChart';
 
 // Styles
 import './scss/index.scss';
 
 function renderApp() {
     const App = () => (
-        // <AppContainer className="container">
+        <AppContainer className="container">
             <Provider store={ store }>
-                <HospitalizationForm />
+                <PatientChart />
             </Provider>
-        // </AppContainer>
+        </AppContainer>
     );
-    ReactDOM.render(<App />, document.getElementById('HospitalizationReception'))
+    ReactDOM.render(<App />, document.getElementById('PatientChart'))
 };
 
 renderApp();
 
 // Hot Reloading
-// hot(module)(renderApp);
+hot(module)(renderApp);

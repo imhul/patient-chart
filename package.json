@@ -6,14 +6,13 @@
   "email": "blashirk@gmail.com",
   "version": "1.1.0",
   "scripts": {
-    "start": "cross-env NODE_ENV=development parcel index.html --no-cache --https --no-hmr -d build/dev",
+    "start": "cross-env NODE_ENV=development parcel index.html --no-cache -d build/dev",
     "build": "cross-env NODE_ENV=production parcel build index.html --no-cache -d build/production"
   },
   "dependencies": {
     "@hot-loader/react-dom": "^16.8.4",
     "antd": "^3.9.3",
     "autoprefixer": "^7.2.6",
-    "axios": "^0.18.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-polyfill": "6.26.0",
     "babel-preset-env": "^1.7.0",
@@ -29,6 +28,8 @@
     "react-dom": "^16.8.4",
     "react-hot-loader": "^4.8.0",
     "react-redux": "^7.0.2",
+    "react-to-pdf": "^0.0.8",
+    "recharts": "^1.6.2",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0"
   },
