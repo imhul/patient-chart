@@ -1,0 +1,100 @@
+#PatientChart {
+    height: 100%;
+    .PatientChart {
+        height: 100%;
+        .flex-container {
+            height: 100%;
+            padding: 25px;
+            display: flex;
+            margin: 0 auto;
+            max-width: 1000px;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            .to-pdf {
+                margin-top: 25px;
+            }
+            table {
+                width: 100%;
+                border: 0;
+                border-left: 1px solid;
+                .bLeft {
+                    border-left:1px #000 solid;	
+                }
+                .bRight
+                {
+                    border-right:1px #000 solid;	
+                }
+                .bTop
+                {
+                    border-top:1px #000 solid;	
+                }
+                .bBott
+                {
+                    border-bottom:1px #000 solid;	
+                }
+                .bAll
+                {
+                    border:1px #000 solid;	
+                }
+                .aCenter
+                {
+                    text-align:center;	
+                }
+                .Box {
+                    float:left;
+                    text-align:center;
+                    vertical-align:middle;
+                    width:4mm;
+                    padding:1px;
+                }
+                .PageBreak {
+                     page-break-after: always;
+                }
+                .Clear {
+                    clear:both;	
+                }
+                .pLine {
+                    border-bottom: 1px solid #000;
+                    width: 100%;
+                    text-align:left;
+                    font-weight:bold;
+                    padding-top:0px;
+                }
+                .pSpan {
+                    position: relative;
+                    background-color: #fff;
+                    top: 3px;
+                    padding-right: 10px;
+                    font-weight:normal;
+                }
+                .Page1 {
+                    p {
+                        text-align:justify;
+                        line-height:2.4em;
+                        margin:0px;
+                        padding:5px;
+                    }
+                }
+                .Page2 { 
+                    p {
+                        text-align:justify;
+                        line-height:1em;
+                        margin:0px;
+                        padding:5px;
+                    }
+                }
+                p {
+                    span {
+                        text-decoration: underline;	
+                        font-weight: bold;
+                        &.stat {
+                            text-decoration: none;
+                            font-weight: normal;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
