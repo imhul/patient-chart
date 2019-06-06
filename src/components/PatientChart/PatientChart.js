@@ -6,7 +6,7 @@ import * as UI_ACTIONS from '../../redux/ui_actions';
 import ReactToPdf from "react-to-pdf";
 import { Table, Button, Icon, } from 'antd';
 import {
-    BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
+    BarChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ComposedChart,
 } from 'recharts';
 
 // Helpers
@@ -148,20 +148,19 @@ class PatientChart extends Component {
                                 <td align="center" valign="middle" className="bRight bBott">200</td>
                                 <td align="center" valign="middle" className="bRight bBott">41</td>
                                 <td colSpan="30" rowSpan="7" align="left" valign="bottom" className="bRight bBott">
-                          
-                                        <BarChart
-                                            width={740}
-                                            height={352}
-                                            data={data}
-                                        >
+                                    <ComposedChart width={740} height={352} data={data}>
+                    
                                             <CartesianGrid strokeDasharray="3 3" />
                                 
                                             <Tooltip />
                             
                                             <Bar dataKey="pv" stackId="a" fill="none" />
                                             <Bar dataKey="uv" stackId="a" fill="#1890ff" />
-                                        </BarChart>
+
+                                            <Line type="monotone" dataKey="uv" dot={false} stroke="#faad14" />
+                                            <Line type="monotone" dataKey="pv" stroke="#f5222d" />
                          
+                                    </ComposedChart>
                                 </td>
                             </tr>
                             <tr>
