@@ -13,8 +13,8 @@ export default (state = initState, action) => {
         case types.LOAD_DATA:
             return { 
                 ...state,
-                chartData: action.payload.Data,
-                chartOptions: action.payload.Options,
+                chartData: action.payload.Data ? action.payload.Data : [],
+                chartOptions: action.payload.Options ? action.payload.Options : [],
                 isInit: true,
             };
 

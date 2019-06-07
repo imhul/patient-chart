@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as UI_ACTIONS from '../../redux/ui_actions';
 import ReactToPdf from "react-to-pdf";
 import { Button, Icon, message, } from 'antd';
-import { Bar, Line, CartesianGrid, Tooltip, ComposedChart,
+import { Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, ComposedChart,
 } from 'recharts';
 
 // Helpers
@@ -59,6 +59,8 @@ class PatientChart extends Component {
         // Props to constants
         const { chartData, chartOptions } = this.props.ui;
         const { uiActions } = this.props;
+        // const mappedData = Array.from(chartData);
+        // console.info("chartData: ", chartData);
 
         return (
             <div className="PatientChart">
@@ -67,56 +69,43 @@ class PatientChart extends Component {
                         <thead>
                             <tr>
                                 <td colSpan="3" align="center" valign="middle" className="bRight bBott bTop">День перебування в стаціонарі</td>
-                                <td colSpan="2" align="center" valign="middle" className="bRight bBott bTop">%d1%</td>
-                                <td colSpan="2" align="center" valign="middle" className="bRight bBott bTop">%d2%</td>
-                                <td colSpan="2" align="center" valign="middle" className="bRight bBott bTop">%d3%</td>
-                                <td colSpan="2" align="center" valign="middle" className="bRight bBott bTop">%d4%</td>
-                                <td colSpan="2" align="center" valign="middle" className="bRight bBott bTop">%d5%</td>
-                                <td colSpan="2" align="center" valign="middle" className="bRight bBott bTop">%d6%</td>
-                                <td colSpan="2" align="center" valign="middle" className="bRight bBott bTop">%d7%</td>
-                                <td colSpan="2" align="center" valign="middle" className="bRight bBott bTop">%d8%</td>
-                                <td colSpan="2" align="center" valign="middle" className="bRight bBott bTop">%d9%</td>
-                                <td colSpan="2" align="center" valign="middle" className="bRight bBott bTop">%d10%</td>
-                                <td colSpan="2" align="center" valign="middle" className="bRight bBott bTop">%d11%</td>
-                                <td colSpan="2" align="center" valign="middle" className="bRight bBott bTop">%d12%</td>
-                                <td colSpan="2" align="center" valign="middle" className="bRight bBott bTop">%d13%</td>
-                                <td colSpan="2" align="center" valign="middle" className="bRight bBott bTop">%d14%</td>
-                                <td colSpan="2" align="center" valign="middle" className="bRight bBott bTop">%d15%</td>
+                                
+                                {
+                                    chartData.map(item => (
+                                        <td 
+                                            colSpan="2" 
+                                            align="center" 
+                                            valign="middle" 
+                                            key={`day${item.day}`}
+                                            className="bRight bBott bTop"
+                                        >
+                                            { `День ${item.day}` }
+                                        </td>
+                                    ))
+                                }
+       
                             </tr>
                             <tr>
                                 <td width="70" align="center" valign="middle" className="bRight bBott">Пульс</td>
                                 <td width="70" align="center" valign="middle" className="bRight bBott">АТ</td>
                                 <td width="70" align="center" valign="middle" className="bRight bBott">Т<sup>o</sup></td>
-                                <td align="center" valign="middle" className="bRight bBott">Р</td>
-                                <td align="center" valign="middle" className="bRight bBott">В</td>
-                                <td align="center" valign="middle" className="bRight bBott">Р</td>
-                                <td align="center" valign="middle" className="bRight bBott">В</td>
-                                <td align="center" valign="middle" className="bRight bBott">Р</td>
-                                <td align="center" valign="middle" className="bRight bBott">В</td>
-                                <td align="center" valign="middle" className="bRight bBott">Р</td>
-                                <td align="center" valign="middle" className="bRight bBott">В</td>
-                                <td align="center" valign="middle" className="bRight bBott">Р</td>
-                                <td align="center" valign="middle" className="bRight bBott">В</td>
-                                <td align="center" valign="middle" className="bRight bBott">Р</td>
-                                <td align="center" valign="middle" className="bRight bBott">В</td>
-                                <td align="center" valign="middle" className="bRight bBott">Р</td>
-                                <td align="center" valign="middle" className="bRight bBott">В</td>
-                                <td align="center" valign="middle" className="bRight bBott">Р</td>
-                                <td align="center" valign="middle" className="bRight bBott">В</td>
-                                <td align="center" valign="middle" className="bRight bBott">Р</td>
-                                <td align="center" valign="middle" className="bRight bBott">В</td>
-                                <td align="center" valign="middle" className="bRight bBott">Р</td>
-                                <td align="center" valign="middle" className="bRight bBott">В</td>
-                                <td align="center" valign="middle" className="bRight bBott">Р</td>
-                                <td align="center" valign="middle" className="bRight bBott">В</td>
-                                <td align="center" valign="middle" className="bRight bBott">Р</td>
-                                <td align="center" valign="middle" className="bRight bBott">В</td>
-                                <td align="center" valign="middle" className="bRight bBott">Р</td>
-                                <td align="center" valign="middle" className="bRight bBott">В</td>
-                                <td align="center" valign="middle" className="bRight bBott">Р</td>
-                                <td align="center" valign="middle" className="bRight bBott">В</td>
-                                <td align="center" valign="middle" className="bRight bBott">Р</td>
-                                <td align="center" valign="middle" className="bRight bBott">В</td>
+
+                                {
+                                    chartData.map(item => (
+                                        <td align="center" valign="middle" className="bRight bBott" key={`${item.day}M`}>
+                                            { item.day%2 === 0 ? "В" : "Р" }
+                                        </td>
+                                    ))
+                                }
+                                
+                                {
+                                    chartData.map(item => (
+                                        <td align="center" valign="middle" className="bRight bBott" key={`${item.day}M`}>
+                                            { item.day%2 === 0 ? "В" : "Р" }
+                                        </td>
+                                    ))
+                                }
+
                             </tr>
                         </thead>
                         <tbody>
@@ -128,14 +117,21 @@ class PatientChart extends Component {
                                     <ComposedChart width={740} height={352} data={chartData}>
                     
                                             <CartesianGrid strokeDasharray="3 3" />
-                                
                                             <Tooltip />
+                                            <XAxis dataKey="day" hide={true} />
+                                            <YAxis hide={true} domain={[34, 250]} />
+                                            {/* <YAxis yAxisId="temp" domain={[34, 45]} hide={true} />
+                                            <YAxis yAxisId="a" domain={[50, 240]} hide={true} />
+                                            <YAxis yAxisId="pulse" domain={[50, 150]} hide={true} /> */}
                             
-                                            <Bar dataKey="pv" stackId="a" fill="none" />
-                                            <Bar dataKey="uv" stackId="a" fill="#1890ff" />
+                                            <Bar dataKey="sysM" stackId="a" fill="none" />
+                                            <Bar dataKey="diaM" stackId="a" fill="#1890ff" />
 
-                                            <Line type="monotone" dataKey="Respiration" dot={false} stroke="#faad14" />
-                                            <Line type="monotone" dataKey="Temperature" stroke="#f5222d" />
+                                            <Bar dataKey="sysE" stackId="b" fill="none" />
+                                            <Bar dataKey="diaE" stackId="b" fill="#f5222d" />
+
+                                            <Line id="tempM" type="monotone" dataKey="tempM" dot={false} stroke="#faad14" />
+                                            <Line id="tempE" type="monotone" dataKey="tempE" stroke="#f5222d" />
                          
                                     </ComposedChart>
                                 </td>
