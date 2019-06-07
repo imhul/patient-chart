@@ -4,9 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as UI_ACTIONS from '../../redux/ui_actions';
 import ReactToPdf from "react-to-pdf";
-import { Table, Button, Icon, } from 'antd';
-import {
-    BarChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ComposedChart,
+import { Button, Icon, message, } from 'antd';
+import { Bar, Line, CartesianGrid, Tooltip, ComposedChart,
 } from 'recharts';
 
 // Helpers
@@ -17,38 +16,15 @@ import {
 } from '../../helpers';
 
 const ref = React.createRef();
-const data = [
-    {
-        name: 'Page A', uv: 4000, pv: 2400, amt: 2400,
-    },
-    {
-        name: 'Page B', uv: 3000, pv: 1398, amt: 2210,
-    },
-    {
-        name: 'Page C', uv: 2000, pv: 9800, amt: 2290,
-    },
-    {
-        name: 'Page D', uv: 2780, pv: 3908, amt: 2000,
-    },
-    {
-        name: 'Page E', uv: 1890, pv: 4800, amt: 2181,
-    },
-    {
-        name: 'Page F', uv: 2390, pv: 3800, amt: 2500,
-    },
-    {
-        name: 'Page G', uv: 3490, pv: 4300, amt: 2100,
-    },
-];
-const options = {
+const successLoadText = "Дані успішно завантажені!";
+const errorLoadText = "Помилка з'єднання! Дані не завантажені!";
+const PDFOptions = {
     orientation: 'landscape',
 };
 
 class PatientChart extends Component {
 
     loadAllData() {
-
-        // Формируем список параметров для передачи на сервер
         const data = {
             'Hospital': document.getElementById("Hospital").value,
             'Patient': document.getElementById("Patient").value,
@@ -57,31 +33,32 @@ class PatientChart extends Component {
             'Department': document.getElementById("Department").value,
         };
 
-        // Отправляем данные на сервер
         fetch(requestURL, {
             method: 'post',
-            headers: {
-                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8",
-            },
+            headers: requestHeader,
             body: requestBody(data)
         })
-            .then((response) => response.json())
-            .then((data) => {
-                this.props.uiActions.loadData(data);
-            })
-            .catch((error) => {
-                console.warn('main fetch error: ', error)
-            })
+        .then(response => {
+            if(response.ok && (response.status === 200)) {
+                message.success(successLoadText);
+                return response.json()
+            } else {
+                message.error(errorLoadText);
+                this.props.uiActions.loadError()
+            }
+        })
+        .then(data => this.props.uiActions.loadData(data))
+        .catch(error => message.error(error))
     };
 
-    // componentDidMount() {
-    //     this.loadAllData();  // First data loading
-    // };
+    componentDidMount() {
+        this.loadAllData();  // First data loading
+    };
 
     render() {
         // Props to constants
-        // const { } = this.props.ui;
-        // const { uiActions } = this.props;
+        const { chartData, chartOptions } = this.props.ui;
+        const { uiActions } = this.props;
 
         return (
             <div className="PatientChart">
@@ -148,7 +125,7 @@ class PatientChart extends Component {
                                 <td align="center" valign="middle" className="bRight bBott">200</td>
                                 <td align="center" valign="middle" className="bRight bBott">41</td>
                                 <td colSpan="30" rowSpan="7" align="left" valign="bottom" className="bRight bBott">
-                                    <ComposedChart width={740} height={352} data={data}>
+                                    <ComposedChart width={740} height={352} data={chartData}>
                     
                                             <CartesianGrid strokeDasharray="3 3" />
                                 
@@ -157,8 +134,8 @@ class PatientChart extends Component {
                                             <Bar dataKey="pv" stackId="a" fill="none" />
                                             <Bar dataKey="uv" stackId="a" fill="#1890ff" />
 
-                                            <Line type="monotone" dataKey="uv" dot={false} stroke="#faad14" />
-                                            <Line type="monotone" dataKey="pv" stroke="#f5222d" />
+                                            <Line type="monotone" dataKey="Respiration" dot={false} stroke="#faad14" />
+                                            <Line type="monotone" dataKey="Temperature" stroke="#f5222d" />
                          
                                     </ComposedChart>
                                 </td>
@@ -215,9 +192,9 @@ class PatientChart extends Component {
                         </tbody>
                     </table>
 
-                    <ReactToPdf targetRef={ref} filename="patient-chart.pdf" options={options}>
+                    <ReactToPdf targetRef={ref} filename="patient-chart.pdf" options={PDFOptions}>
                         {({ toPdf }) => (
-                            <Button type="primary" className="to-pdf" onClick={toPdf}>PDF</Button>
+                            <Button type="primary" className="to-pdf" onClick={() => { uiActions.toPDF; return toPdf }}>PDF</Button>
                         )}
                     </ReactToPdf>
                 </div>
