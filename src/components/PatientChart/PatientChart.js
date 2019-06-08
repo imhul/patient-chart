@@ -1,11 +1,11 @@
 // Hospitalization Form Loader
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as UI_ACTIONS from '../../redux/ui_actions';
 import ReactToPdf from "react-to-pdf";
 import { Button, Icon, message, } from 'antd';
-import { Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, ComposedChart,
+import { Bar, Line, XAxis, YAxis, CartesianGrid, ComposedChart,
 } from 'recharts';
 
 // Helpers
@@ -17,10 +17,22 @@ import {
 
 const ref = React.createRef();
 const successLoadText = "Дані успішно завантажені!";
+const successPDFDownloading = "PDF успішно завантажений!";
+const errorPDFDownloading = "Помилка завантаження PDF!";
 const errorLoadText = "Помилка з'єднання! Дані не завантажені!";
 const PDFOptions = {
     orientation: 'landscape',
 };
+
+class CustomLabel extends PureComponent {
+    render() {
+      const {
+        x, y, stroke, value,
+      } = this.props;
+  
+      return <text x={x} y={y} dy={-4} fill={stroke} fontSize={12} textAnchor="middle">{value}</text>;
+    }
+  }
 
 class PatientChart extends Component {
 
@@ -55,12 +67,37 @@ class PatientChart extends Component {
         this.loadAllData();  // First data loading
     };
 
+    completePDF = () => {
+        this.props.uiActions.toPDF;
+        message.success(successPDFDownloading, 3)
+    };
+
     render() {
         // Props to constants
         const { chartData, chartOptions } = this.props.ui;
         const { uiActions } = this.props;
-        // const mappedData = Array.from(chartData);
-        // console.info("chartData: ", chartData);
+
+        const DayTD = () => {
+            return chartData.map(item => (
+                <td 
+                    colSpan="2" 
+                    align="center" 
+                    valign="middle" 
+                    key={`day${item.day}`}
+                    className="bRight bBott bTop"
+                >
+                    { `День ${item.day}` }
+                </td>
+            ))
+        };
+
+        const EveningMourningTD = () => {
+            return chartData.map(item => (
+                <td align="center" valign="middle" className="bRight bBott" key={`${item.day}M`}>
+                    { item.day%2 === 0 ? "В" : "Р" }
+                </td>
+            ))
+        };
 
         return (
             <div className="PatientChart">
@@ -69,43 +106,14 @@ class PatientChart extends Component {
                         <thead>
                             <tr>
                                 <td colSpan="3" align="center" valign="middle" className="bRight bBott bTop">День перебування в стаціонарі</td>
-                                
-                                {
-                                    chartData.map(item => (
-                                        <td 
-                                            colSpan="2" 
-                                            align="center" 
-                                            valign="middle" 
-                                            key={`day${item.day}`}
-                                            className="bRight bBott bTop"
-                                        >
-                                            { `День ${item.day}` }
-                                        </td>
-                                    ))
-                                }
-       
+                                <DayTD />
                             </tr>
                             <tr>
                                 <td width="70" align="center" valign="middle" className="bRight bBott">Пульс</td>
                                 <td width="70" align="center" valign="middle" className="bRight bBott">АТ</td>
                                 <td width="70" align="center" valign="middle" className="bRight bBott">Т<sup>o</sup></td>
-
-                                {
-                                    chartData.map(item => (
-                                        <td align="center" valign="middle" className="bRight bBott" key={`${item.day}M`}>
-                                            { item.day%2 === 0 ? "В" : "Р" }
-                                        </td>
-                                    ))
-                                }
-                                
-                                {
-                                    chartData.map(item => (
-                                        <td align="center" valign="middle" className="bRight bBott" key={`${item.day}M`}>
-                                            { item.day%2 === 0 ? "В" : "Р" }
-                                        </td>
-                                    ))
-                                }
-
+                                <EveningMourningTD />
+                                <EveningMourningTD />
                             </tr>
                         </thead>
                         <tbody>
@@ -117,12 +125,12 @@ class PatientChart extends Component {
                                     <ComposedChart width={740} height={352} data={chartData}>
                     
                                             <CartesianGrid strokeDasharray="3 3" />
-                                            <Tooltip />
                                             <XAxis dataKey="day" hide={true} />
-                                            <YAxis hide={true} domain={[34, 250]} />
-                                            {/* <YAxis yAxisId="temp" domain={[34, 45]} hide={true} />
-                                            <YAxis yAxisId="a" domain={[50, 240]} hide={true} />
-                                            <YAxis yAxisId="pulse" domain={[50, 150]} hide={true} /> */}
+
+                                            {/* TODO: YAxis!!! */}
+                                            <YAxis id="temp" domain={[34, 45]} />
+                                            <YAxis id="press" domain={[50, 240]} />
+                                            <YAxis id="pulse" domain={[50, 150]} />
                             
                                             <Bar dataKey="sysM" stackId="a" fill="none" />
                                             <Bar dataKey="diaM" stackId="a" fill="#1890ff" />
@@ -130,8 +138,21 @@ class PatientChart extends Component {
                                             <Bar dataKey="sysE" stackId="b" fill="none" />
                                             <Bar dataKey="diaE" stackId="b" fill="#f5222d" />
 
-                                            <Line id="tempM" type="monotone" dataKey="tempM" dot={false} stroke="#faad14" />
-                                            <Line id="tempE" type="monotone" dataKey="tempE" stroke="#f5222d" />
+                                            <Line 
+                                                id="tempM" 
+                                                dot={false} 
+                                                type="monotone" 
+                                                dataKey="tempM" 
+                                                stroke="#faad14" 
+                                                label={<CustomLabel />} 
+                                            />
+                                            <Line 
+                                                id="tempE" 
+                                                type="monotone" 
+                                                dataKey="tempE" 
+                                                stroke="#f5222d"
+                                                label={<CustomLabel />} 
+                                            />
                          
                                     </ComposedChart>
                                 </td>
@@ -188,9 +209,14 @@ class PatientChart extends Component {
                         </tbody>
                     </table>
 
-                    <ReactToPdf targetRef={ref} filename="patient-chart.pdf" options={PDFOptions}>
+                    <ReactToPdf 
+                        targetRef={ref} 
+                        filename="patient-chart.pdf" 
+                        options={PDFOptions} 
+                        onComplete={() => this.completePDF }
+                    >
                         {({ toPdf }) => (
-                            <Button type="primary" className="to-pdf" onClick={() => { uiActions.toPDF; return toPdf }}>PDF</Button>
+                            <Button type="primary" className="to-pdf" onClick={ toPdf }>PDF</Button>
                         )}
                     </ReactToPdf>
                 </div>

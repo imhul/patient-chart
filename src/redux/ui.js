@@ -1,27 +1,35 @@
-import { typesUI as types } from './types';
+import { typesUI as type } from './types';
 
 const initState = {
+    isPDF: false,
     isInit: false,
     chartData: [],
     chartOptions: [],
-    isPDF: false,
+    isDataLoaded: false,
 };
 
 export default (state = initState, action) => {
     switch (action.type) {
 
-        case types.LOAD_DATA:
+        case type.LOAD_DATA:
             return { 
                 ...state,
+                isInit: true,
+                isDataLoaded: true,
                 chartData: action.payload.Data ? action.payload.Data : [],
                 chartOptions: action.payload.Options ? action.payload.Options : [],
-                isInit: true,
             };
 
-        case types.TO_PDF:
+        case type.TO_PDF:
             return { 
                 ...state,
                 isPDF: true,
+            };
+
+        case type.LOAD_ERROR:
+            return { 
+                ...state,
+                isDataLoaded: false,
             };
 
         default:
