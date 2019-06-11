@@ -30,7 +30,7 @@ class CustomLabel extends PureComponent {
         x, y, stroke, value,
       } = this.props;
   
-      return <text x={x} y={y} dy={-4} fill={stroke} fontSize={12} textAnchor="middle">{value}</text>;
+      return <text x={x} y={y} dy={-4} fill={stroke} className="chart-value">{value}</text>;
     }
   }
 
@@ -121,39 +121,80 @@ class PatientChart extends Component {
                                 <td height="50" align="center" valign="middle" className="bRight bBott">140</td>
                                 <td align="center" valign="middle" className="bRight bBott">200</td>
                                 <td align="center" valign="middle" className="bRight bBott">41</td>
-                                <td colSpan="30" rowSpan="7" align="left" valign="bottom" className="bRight bBott">
-                                    <ComposedChart width={740} height={352} data={chartData}>
-                    
-                                            <CartesianGrid strokeDasharray="3 3" />
-                                            <XAxis dataKey="day" hide={true} />
+                                <td colSpan="30" rowSpan="7" align="left" valign="bottom" className="bRight bBott pos-relative">
+                                    
+                                    <ComposedChart width={740} height={352} data={chartData}
+                                    >
+                                        {/* Pressure */}
+                                        <XAxis dataKey="day" hide={true} />
+                                        <YAxis id="press" hide={true} domain={[50, 240]} />
+                                        <Bar dataKey="sysM" stackId="m" fill="none" />
+                                        <Bar dataKey="diaM" stackId="m" fill="#1890ff" />
+                                        <Bar dataKey="sysE" stackId="e" fill="none" />
+                                        <Bar dataKey="diaE" stackId="e" fill="#f5222d" />
+                                        <Line 
+                                            id="resM" 
+                                            type="monotone" 
+                                            dataKey="resM" 
+                                            stroke="#64dd17" 
+                                            label={<CustomLabel />} 
+                                        />
+                                        <Line 
+                                            id="resE"
+                                            type="monotone" 
+                                            dataKey="resE" 
+                                            stroke="#33691e" 
+                                            label={<CustomLabel />} 
+                                        />
+                                        <Line 
+                                            id="avgM" 
+                                            type="monotone" 
+                                            dataKey="avgM" 
+                                            stroke="#c51162" 
+                                            label={<CustomLabel />} 
+                                        />
+                                        <Line 
+                                            id="avgE" 
+                                            type="monotone" 
+                                            dataKey="avgE" 
+                                            stroke="#aa00ff" 
+                                            label={<CustomLabel />} 
+                                        />
+                                    </ComposedChart>
 
-                                            {/* TODO: YAxis!!! */}
-                                            <YAxis id="temp" domain={[34, 45]} />
-                                            <YAxis id="press" domain={[50, 240]} />
-                                            <YAxis id="pulse" domain={[50, 150]} />
-                            
-                                            <Bar dataKey="sysM" stackId="a" fill="none" />
-                                            <Bar dataKey="diaM" stackId="a" fill="#1890ff" />
+                                    <ComposedChart width={740} height={352} data={chartData} className="chart-with-no-bg">
+                                        {/* Temperatture */}
+                                        <CartesianGrid width={740} height={352} />
+                                        <XAxis dataKey="day" hide={true} />
+                                        <YAxis id="temp" hide={true} domain={[34, 43]} />
+                                        <Line 
+                                            id="tempM" 
+                                            type="monotone" 
+                                            dataKey="tempM" 
+                                            stroke="#faad14" 
+                                            label={<CustomLabel />} 
+                                        />
+                                        <Line 
+                                            id="tempE" 
+                                            type="monotone" 
+                                            dataKey="tempE" 
+                                            stroke="#f5222d"
+                                            label={<CustomLabel />} 
+                                        />
+                                    </ComposedChart>
 
-                                            <Bar dataKey="sysE" stackId="b" fill="none" />
-                                            <Bar dataKey="diaE" stackId="b" fill="#f5222d" />
 
-                                            <Line 
-                                                id="tempM" 
-                                                dot={false} 
-                                                type="monotone" 
-                                                dataKey="tempM" 
-                                                stroke="#faad14" 
-                                                label={<CustomLabel />} 
-                                            />
-                                            <Line 
-                                                id="tempE" 
-                                                type="monotone" 
-                                                dataKey="tempE" 
-                                                stroke="#f5222d"
-                                                label={<CustomLabel />} 
-                                            />
-                         
+                                    <ComposedChart width={740} height={352} data={chartData} className="chart-with-no-bg">
+                                        {/* Pulse */}
+                                        <XAxis dataKey="day" hide={true} />
+                                        <YAxis id="pulse" hide={true} domain={[50, 150]} />
+                                        <Line 
+                                            id="pulseE" 
+                                            type="monotone" 
+                                            dataKey="pulseE" 
+                                            stroke="#aa00ff" 
+                                            label={<CustomLabel />} 
+                                        />
                                     </ComposedChart>
                                 </td>
                             </tr>

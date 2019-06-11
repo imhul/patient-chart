@@ -94,6 +94,20 @@
                         }
                     }
                 }
+                .chart-value {
+                    border-radius: 50%;
+                    background-color: rgba(24, 144, 255, 0.5);
+                    text-anchor: middle;
+                    font-size: 14px;
+                    display: none;
+                }
+                .chart-with-no-bg {
+                    position: absolute !important;
+                    top: 0;
+                }
+                .pos-relative {
+                    position: relative;
+                }
             }
         }
     }
