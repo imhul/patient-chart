@@ -4,6 +4,7 @@ const initState = {
     isPDF: false,
     isInit: false,
     chartData: [],
+    patientOptions: [],
     chartOptions: [],
     isDataLoaded: false,
 };
@@ -16,8 +17,9 @@ export default (state = initState, action) => {
                 ...state,
                 isInit: true,
                 isDataLoaded: true,
-                chartData: action.payload.Data ? action.payload.Data : [],
-                chartOptions: action.payload.Options ? action.payload.Options : [],
+                chartData: action.payload.data ? action.payload.data : [],
+                patientOptions: action.payload.patient ? action.payload.patient : [],
+                chartOptions: action.payload.options ? action.payload.options : [],
             };
 
         case type.TO_PDF:

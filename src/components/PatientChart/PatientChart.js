@@ -1,5 +1,5 @@
 // Hospitalization Form Loader
-import React, { Component, PureComponent } from 'react';
+import React, { Component, PureComponent, Fragment } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as UI_ACTIONS from '../../redux/ui_actions';
@@ -26,10 +26,7 @@ const PDFOptions = {
 
 class CustomLabel extends PureComponent {
     render() {
-      const {
-        x, y, stroke, value,
-      } = this.props;
-  
+      const { x, y, stroke, value, } = this.props;
       return <text x={x} y={y} dy={-4} fill={stroke} className="chart-value">{value}</text>;
     }
   }
@@ -74,7 +71,7 @@ class PatientChart extends Component {
 
     render() {
         // Props to constants
-        const { chartData, chartOptions } = this.props.ui;
+        const { chartData, patientOptions, chartOptions } = this.props.ui;
         const { uiActions } = this.props;
 
         const DayTD = () => {
@@ -234,25 +231,28 @@ class PatientChart extends Component {
                                 <td align="center" valign="middle" className="bRight bBott">50</td>
                                 <td align="center" valign="middle" className="bRight bBott">35</td>
                             </tr>
-                            <tr>
-                                <td colSpan="3" align="left" className="bRight bBott">Дихання</td>
-                                <td colSpan="30" rowSpan="6" align="left" valign="top" className="bRight bBott">%TemperatureData%</td>
-                            </tr>
-                            <tr>
-                                <td colSpan="3" align="left" className="bRight bBott">Вага</td>
-                            </tr>
-                            <tr>
-                                <td colSpan="3" align="left" className="bRight bBott">Випито  рідини</td>
-                            </tr>
-                            <tr>
-                                <td colSpan="3" align="left" className="bRight bBott">Добова  кількість сечі</td>
-                            </tr>
-                            <tr>
-                                <td colSpan="3" align="left" className="bRight bBott">Випорожнення</td>
-                            </tr>
-                            <tr>
-                            <td colSpan="3" align="left" className="bRight bBott">Ванна</td>
-                        </tr>
+                            
+                            { 
+                                chartOptions.map((day, index) => {
+                                    console.info("day: ", day);
+
+                                    return (
+                                        <tr key={ index }>
+                                            <td colSpan="3" align="left" className="bRight bBott">{ day[index].title }</td>
+                                            {
+                                                day.map((option, index) => {
+                                                    return (
+                                                        <td align="left" valign="top" key={ index } className="bRight bBott">
+                                                            { option.value }
+                                                        </td>
+                                                    )
+                                                })
+                                            }
+                                        </tr>
+                                    )
+                                })
+                            }
+
                         </tbody>
                     </table>
 
