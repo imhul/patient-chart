@@ -183,7 +183,6 @@ class PatientChart extends Component {
                                         />
                                     </ComposedChart>
 
-
                                     <ComposedChart width={740} height={352} data={chartData} className="chart-with-no-bg">
                                         {/* Pulse */}
                                         <XAxis dataKey="day" hide={true} />
@@ -192,6 +191,13 @@ class PatientChart extends Component {
                                             id="pulseE" 
                                             type="monotone" 
                                             dataKey="pulseE" 
+                                            stroke="#aa00ff" 
+                                            label={<CustomLabel />} 
+                                        />
+                                        <Line 
+                                            id="pulseM" 
+                                            type="monotone" 
+                                            dataKey="pulseM" 
                                             stroke="#aa00ff" 
                                             label={<CustomLabel />} 
                                         />
