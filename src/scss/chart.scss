@@ -17,71 +17,52 @@
             table {
                 width: 100%;
                 border: 0;
-                border-left: 1px solid;
-                .bLeft {
-                    border-left:1px #000 solid;	
-                }
-                .bRight
-                {
-                    border-right:1px #000 solid;	
-                }
-                .bTop
-                {
-                    border-top:1px #000 solid;	
-                }
-                .bBott
-                {
-                    border-bottom:1px #000 solid;	
-                }
-                .bAll
-                {
-                    border:1px #000 solid;	
-                }
-                .aCenter
-                {
-                    text-align:center;	
+                td {
+                    border: 1px #ccc solid;
+                }	
+                .aCenter {
+                    text-align: center;	
                 }
                 .Box {
-                    float:left;
-                    text-align:center;
-                    vertical-align:middle;
-                    width:4mm;
-                    padding:1px;
+                    float: left;
+                    text-align: center;
+                    vertical-align: middle;
+                    width: 4mm;
+                    padding: 1px;
                 }
                 .PageBreak {
                      page-break-after: always;
                 }
                 .Clear {
-                    clear:both;	
+                    clear: both;	
                 }
                 .pLine {
-                    border-bottom: 1px solid #000;
                     width: 100%;
-                    text-align:left;
-                    font-weight:bold;
-                    padding-top:0px;
+                    text-align: left;
+                    font-weight: bold;
+                    padding-top: 0;
                 }
                 .pSpan {
                     position: relative;
                     background-color: #fff;
                     top: 3px;
                     padding-right: 10px;
-                    font-weight:normal;
+                    font-weight: normal;
                 }
                 .Page1 {
                     p {
-                        text-align:justify;
-                        line-height:2.4em;
-                        margin:0px;
-                        padding:5px;
+                        text-align: justify;
+                        line-height: 2.4em;
+                        margin: 0;
+                        padding: 5px;
                     }
                 }
                 .Page2 { 
                     p {
-                        text-align:justify;
-                        line-height:1em;
-                        margin:0px;
-                        padding:5px;
+                        text-align: justify;
+                        line-height: 1em;
+                        margin: 0;
+                        padding: 5px;
                     }
                 }
                 p {
@@ -107,6 +88,21 @@
                 }
                 .pos-relative {
                     position: relative;
+                    border-top: 1px rgba(0,0,0,0) solid;
+                }
+                .day-full-cell {
+                    width: 100%;
+                    border-bottom: 1px #ccc solid;
+                }
+                .day-half-cell {
+                    width: 50%;
+                    display: inline-block;
+                    &.mourning {
+                        border-right: 1px #ccc solid;
+                    }
+                }
+                .chart-wrapper {
+                    border-bottom: 1px rgba(0,0,0,0) solid;
                 }
             }
         }

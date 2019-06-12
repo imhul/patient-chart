@@ -74,31 +74,30 @@ class PatientChart extends Component {
         const { chartData, patientOptions, chartOptions } = this.props.ui;
         const { uiActions } = this.props;
 
-        const DayTD = () => {
+        const DayTD = () => {        
+            let Switcher = false;
             return chartData.map(item => {
-                console.info("DayTD item: ", item);
-                return ( 
-                    <td 
-                        colSpan="2" 
-                        align="center" 
-                        valign="middle" 
-                        key={`day${item.day}${item.time === "e" ? "e" : "m"}`}
-                        className="bRight bBott bTop"
-                    >
-                        { `День ${item.day}` }
-                    </td>
-                )
-            })
-        };
-
-        const EveningMourningTD = () => {
-            return chartData.map(item => {
-                console.info("EveningMourningTD item: ", item);
-                return (
-                    <td align="center" valign="middle" className="bRight bBott" key={`${item.day}${item.time === "e" ? "e" : "m"}`}>
-                        { item.time === "e" ? "В" : "Р" }
-                    </td>
-                )
+                if(Switcher == false)
+                {
+                    return ( 
+                        <td 
+                            colSpan="2" 
+                            rowSpan="2" 
+                            align="center" 
+                            valign="middle" 
+                            key={`day${item.day}${item.time === "e" ? "e" : "m"}`}
+                            className="chart-wrapper"
+                        >
+                            <div className="mourning day-full-cell">
+                                { `День ${item.day}` }
+                            </div>
+                            <div className="mourning day-half-cell">Р</div>
+                            <div className="evening day-half-cell">В</div>
+                            { Switcher = true }
+                        </td>
+                    )
+                }
+                else Switcher = false;              
             })
         };
 
@@ -126,8 +125,6 @@ class PatientChart extends Component {
                                 <td width="70" align="center" valign="middle" className="bRight bBott">Пульс</td>
                                 <td width="70" align="center" valign="middle" className="bRight bBott">АТ</td>
                                 <td width="70" align="center" valign="middle" className="bRight bBott">Т<sup>o</sup></td>
-                                <EveningMourningTD />
-                                <EveningMourningTD />
                             </tr>
                         </thead>
                         <tbody>
@@ -139,43 +136,33 @@ class PatientChart extends Component {
                                     
                                     <ComposedChart width={740} height={352} data={chartData}>
                                         {/* Pressure */}
+                                        <CartesianGrid 
+                                            width={740} 
+                                            height={352} 
+                                            vertical={false} 
+                                            horizontalPoints={[ 0, 50, 100, 150, 200, 250 ]} 
+                                            // verticalPoints={[ 0, 125, 250, 375, 500, ]}
+                                        />
                                         <XAxis dataKey="day" hide={true} />
-                                        <YAxis id="press" hide={true} domain={[50, 240]} />
+                                        <YAxis id="press" hide={true} domain={[50, 250]} />
                                         <Bar dataKey="sys" stackId="m" fill="none" />
                                         <Bar dataKey="dia" stackId="m" fill="#1890ff" />
-                                        {/* <Bar dataKey="sys" stackId="e" fill="none" />
-                                        <Bar dataKey="dia" stackId="e" fill="#f5222d" /> */}
                                         <Line 
                                             type="monotone" 
                                             dataKey="res" 
                                             stroke="#64dd17" 
                                             label={<CustomLabel />} 
                                         />
-                                        {/* <Line 
-                                            id="resE"
-                                            type="monotone" 
-                                            dataKey="resE" 
-                                            stroke="#33691e" 
-                                            label={<CustomLabel />} 
-                                        /> */}
                                         <Line 
                                             type="monotone" 
                                             dataKey="avg" 
                                             stroke="#c51162" 
                                             label={<CustomLabel />} 
                                         />
-                                        {/* <Line 
-                                            id="avgE" 
-                                            type="monotone" 
-                                            dataKey="avgE" 
-                                            stroke="#aa00ff" 
-                                            label={<CustomLabel />} 
-                                        /> */}
                                     </ComposedChart>
 
                                     <ComposedChart width={740} height={352} data={chartData} className="chart-with-no-bg">
                                         {/* Temperatture */}
-                                        <CartesianGrid width={740} height={352} />
                                         <XAxis dataKey="day" hide={true} />
                                         <YAxis id="temp" hide={true} domain={[34, 43]} />
                                         <Line 
@@ -184,13 +171,6 @@ class PatientChart extends Component {
                                             stroke="#faad14" 
                                             label={<CustomLabel />} 
                                         />
-                                        {/* <Line 
-                                            id="tempE" 
-                                            type="monotone" 
-                                            dataKey="tempE" 
-                                            stroke="#f5222d"
-                                            label={<CustomLabel />} 
-                                        /> */}
                                     </ComposedChart>
 
                                     <ComposedChart width={740} height={352} data={chartData} className="chart-with-no-bg">
@@ -203,13 +183,6 @@ class PatientChart extends Component {
                                             stroke="#aa00ff" 
                                             label={<CustomLabel />} 
                                         />
-                                        {/* <Line 
-                                            id="pulseM" 
-                                            type="monotone" 
-                                            dataKey="pulseM" 
-                                            stroke="#aa00ff" 
-                                            label={<CustomLabel />} 
-                                        /> */}
                                     </ComposedChart>
                                 </td>
                             </tr>
@@ -267,7 +240,6 @@ class PatientChart extends Component {
                                 <td colSpan="3" align="left" className="bRight bBott">Ванна</td>
                                 <FooterTD name="Bath" />
                             </tr>
-
                         </tbody>
                     </table>
 
