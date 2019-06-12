@@ -26,10 +26,10 @@ const PDFOptions = {
 
 class CustomLabel extends PureComponent {
     render() {
-      const { x, y, stroke, value, } = this.props;
-      return <text x={x} y={y} dy={-4} fill={stroke} className="chart-value">{value}</text>;
+        const { x, y, stroke, value, } = this.props;
+        return <text x={x} y={y} dy={-4} fill={stroke} className="chart-value">{value}</text>;
     }
-  }
+};
 
 class PatientChart extends Component {
 
@@ -75,25 +75,42 @@ class PatientChart extends Component {
         const { uiActions } = this.props;
 
         const DayTD = () => {
-            return chartData.map(item => (
-                <td 
-                    colSpan="2" 
-                    align="center" 
-                    valign="middle" 
-                    key={`day${item.day}`}
-                    className="bRight bBott bTop"
-                >
-                    { `День ${item.day}` }
-                </td>
-            ))
+            return chartData.map(item => {
+                console.info("DayTD item: ", item);
+                return ( 
+                    <td 
+                        colSpan="2" 
+                        align="center" 
+                        valign="middle" 
+                        key={`day${item.day}${item.time === "e" ? "e" : "m"}`}
+                        className="bRight bBott bTop"
+                    >
+                        { `День ${item.day}` }
+                    </td>
+                )
+            })
         };
 
         const EveningMourningTD = () => {
-            return chartData.map(item => (
-                <td align="center" valign="middle" className="bRight bBott" key={`${item.day}M`}>
-                    { item.day%2 === 0 ? "В" : "Р" }
-                </td>
-            ))
+            return chartData.map(item => {
+                console.info("EveningMourningTD item: ", item);
+                return (
+                    <td align="center" valign="middle" className="bRight bBott" key={`${item.day}${item.time === "e" ? "e" : "m"}`}>
+                        { item.time === "e" ? "В" : "Р" }
+                    </td>
+                )
+            })
+        };
+
+        const FooterTD = data => { 
+            return chartOptions.map((day, index) => {
+                const dayData = day.filter(item => item.name === data.name)[0];
+                return (
+                    <td key={ index } align="center" valign="middle" className="bRight bBott">
+                        { dayData.value }
+                    </td>
+                )
+            })
         };
 
         return (
@@ -120,43 +137,40 @@ class PatientChart extends Component {
                                 <td align="center" valign="middle" className="bRight bBott">41</td>
                                 <td colSpan="30" rowSpan="7" align="left" valign="bottom" className="bRight bBott pos-relative">
                                     
-                                    <ComposedChart width={740} height={352} data={chartData}
-                                    >
+                                    <ComposedChart width={740} height={352} data={chartData}>
                                         {/* Pressure */}
                                         <XAxis dataKey="day" hide={true} />
                                         <YAxis id="press" hide={true} domain={[50, 240]} />
-                                        <Bar dataKey="sysM" stackId="m" fill="none" />
-                                        <Bar dataKey="diaM" stackId="m" fill="#1890ff" />
-                                        <Bar dataKey="sysE" stackId="e" fill="none" />
-                                        <Bar dataKey="diaE" stackId="e" fill="#f5222d" />
+                                        <Bar dataKey="sys" stackId="m" fill="none" />
+                                        <Bar dataKey="dia" stackId="m" fill="#1890ff" />
+                                        {/* <Bar dataKey="sys" stackId="e" fill="none" />
+                                        <Bar dataKey="dia" stackId="e" fill="#f5222d" /> */}
                                         <Line 
-                                            id="resM" 
                                             type="monotone" 
-                                            dataKey="resM" 
+                                            dataKey="res" 
                                             stroke="#64dd17" 
                                             label={<CustomLabel />} 
                                         />
-                                        <Line 
+                                        {/* <Line 
                                             id="resE"
                                             type="monotone" 
                                             dataKey="resE" 
                                             stroke="#33691e" 
                                             label={<CustomLabel />} 
-                                        />
+                                        /> */}
                                         <Line 
-                                            id="avgM" 
                                             type="monotone" 
-                                            dataKey="avgM" 
+                                            dataKey="avg" 
                                             stroke="#c51162" 
                                             label={<CustomLabel />} 
                                         />
-                                        <Line 
+                                        {/* <Line 
                                             id="avgE" 
                                             type="monotone" 
                                             dataKey="avgE" 
                                             stroke="#aa00ff" 
                                             label={<CustomLabel />} 
-                                        />
+                                        /> */}
                                     </ComposedChart>
 
                                     <ComposedChart width={740} height={352} data={chartData} className="chart-with-no-bg">
@@ -165,19 +179,18 @@ class PatientChart extends Component {
                                         <XAxis dataKey="day" hide={true} />
                                         <YAxis id="temp" hide={true} domain={[34, 43]} />
                                         <Line 
-                                            id="tempM" 
                                             type="monotone" 
-                                            dataKey="tempM" 
+                                            dataKey="temp" 
                                             stroke="#faad14" 
                                             label={<CustomLabel />} 
                                         />
-                                        <Line 
+                                        {/* <Line 
                                             id="tempE" 
                                             type="monotone" 
                                             dataKey="tempE" 
                                             stroke="#f5222d"
                                             label={<CustomLabel />} 
-                                        />
+                                        /> */}
                                     </ComposedChart>
 
                                     <ComposedChart width={740} height={352} data={chartData} className="chart-with-no-bg">
@@ -185,19 +198,18 @@ class PatientChart extends Component {
                                         <XAxis dataKey="day" hide={true} />
                                         <YAxis id="pulse" hide={true} domain={[50, 150]} />
                                         <Line 
-                                            id="pulseE" 
                                             type="monotone" 
-                                            dataKey="pulseE" 
+                                            dataKey="pulse" 
                                             stroke="#aa00ff" 
                                             label={<CustomLabel />} 
                                         />
-                                        <Line 
+                                        {/* <Line 
                                             id="pulseM" 
                                             type="monotone" 
                                             dataKey="pulseM" 
                                             stroke="#aa00ff" 
                                             label={<CustomLabel />} 
-                                        />
+                                        /> */}
                                     </ComposedChart>
                                 </td>
                             </tr>
@@ -231,27 +243,30 @@ class PatientChart extends Component {
                                 <td align="center" valign="middle" className="bRight bBott">50</td>
                                 <td align="center" valign="middle" className="bRight bBott">35</td>
                             </tr>
-                            
-                            { 
-                                chartOptions.map((day, index) => {
-                                    console.info("day: ", day);
-
-                                    return (
-                                        <tr key={ index }>
-                                            <td colSpan="3" align="left" className="bRight bBott">{ day[index].title }</td>
-                                            {
-                                                day.map((option, index) => {
-                                                    return (
-                                                        <td align="left" valign="top" key={ index } className="bRight bBott">
-                                                            { option.value }
-                                                        </td>
-                                                    )
-                                                })
-                                            }
-                                        </tr>
-                                    )
-                                })
-                            }
+                            <tr>
+                                <td colSpan="3" align="left" className="bRight bBott">Дихання</td>
+                                <FooterTD name="Respiration" />
+                            </tr>
+                            <tr>
+                                <td colSpan="3" align="left" className="bRight bBott">Вага</td>
+                                <FooterTD name="Weight" />
+                            </tr>
+                            <tr>
+                                <td colSpan="3" align="left" className="bRight bBott">Випито рідини</td>
+                                <FooterTD name="AquaDrink" />
+                            </tr>
+                            <tr>
+                                <td colSpan="3" align="left" className="bRight bBott">Добова кількість сечі</td>
+                                <FooterTD name="Urine" />
+                            </tr>
+                            <tr>
+                                <td colSpan="3" align="left" className="bRight bBott">Випорожнення</td>
+                                <FooterTD name="Defecation" />
+                            </tr>
+                            <tr>
+                                <td colSpan="3" align="left" className="bRight bBott">Ванна</td>
+                                <FooterTD name="Bath" />
+                            </tr>
 
                         </tbody>
                     </table>
