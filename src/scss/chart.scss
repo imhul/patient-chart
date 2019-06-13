@@ -14,6 +14,19 @@
             .to-pdf {
                 margin-top: 25px;
             }
+            .patient-info {
+                width: 100%;
+                .patient-name {
+                    width: 50%;
+                    display: inline-block;
+                    text-align: left;
+                }
+                .patient-icon {
+                    width: 50%;
+                    display: inline-block;
+                    text-align: right;
+                }
+            }
             table {
                 width: 100%;
                 border: 0;
@@ -75,13 +88,6 @@
                         }
                     }
                 }
-                .chart-value {
-                    border-radius: 50%;
-                    background-color: rgba(24, 144, 255, 0.5);
-                    text-anchor: middle;
-                    font-size: 14px;
-                    display: none;
-                }
                 .chart-with-no-bg {
                     position: absolute !important;
                     top: 0;
@@ -93,16 +99,35 @@
                 .day-full-cell {
                     width: 100%;
                     border-bottom: 1px #ccc solid;
+                    margin-top: -5px;
+                    padding-bottom: 5px;
                 }
                 .day-half-cell {
                     width: 50%;
                     display: inline-block;
+                    position: relative;
+                    bottom: -5px;
+                    height: 20px;
                     &.mourning {
                         border-right: 1px #ccc solid;
                     }
                 }
                 .chart-wrapper {
                     border-bottom: 1px rgba(0,0,0,0) solid;
+                }
+                .padding-left {
+                    padding: 4px 10px;
+                }
+                .recharts-legend-wrapper {
+                    width: 630px !important;
+                    height: auto !important;
+                    right: 5px !important;
+                    bottom: 5px !important;
+                    margin: 0 55px;
+                }
+                .chart-icon {
+                    font-size: 36px;
+                    color: #1890ff;
                 }
             }
         }
