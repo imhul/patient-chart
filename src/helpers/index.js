@@ -29,7 +29,6 @@ class CustomBarSYSLabel extends PureComponent {
                 textAnchor="top"
             >
                 { value }
-                { console.info("CustomBarLabel value: ", value) }
             </text>
         )
     }
