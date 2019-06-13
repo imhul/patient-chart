@@ -25,7 +25,8 @@ const successPDFDownloading = "PDF успішно завантажений!";
 const errorPDFDownloading = "Помилка завантаження PDF!";
 const errorLoadText = "Помилка з'єднання! Дані не завантажені!";
 const PDFOptions = {
-    orientation: 'landscape',
+    unit: 'px',
+    format: 'tabloid',
 };
 
 class PatientChart extends Component {
@@ -107,22 +108,53 @@ class PatientChart extends Component {
                 )
             })
         };
-CustomBarDIALabel
+
         return (
             <div className="PatientChart">
-                <div className="flex-container" ref={ reff }>
-                    <div className="patient-info">
-                    <div 
-                        className="patient-name" 
-                        id={ patientOptions.hospitalization }
-                        name={`hospitalization-${ patientOptions.hospitalization }`}
-                    >
-                        { patientOptions.name }
-                    </div>
-                    <div className="patient-icon">
-                        <Icon type="user-add" className="chart-icon" />
-                    </div>
-                    </div>
+                <div className="flex-container" style={{ width: 1000 }} ref={ reff }>
+
+                    <header>
+                        <div className="bordered display-flex">
+                            <div className="left-block bordered">
+                                <div className="bordered">
+                                    Міністерство охорони здоров’я України
+                                </div>
+                                <div className="bordered">
+                                    <p>КУ «Обласна клінічна лікарня ім. О.Ф. Гербачевського»</p>
+                                    <p>вул. Червоного Хреста, 3, Житомир, Житомирська область, 10002</p>              
+                                </div>
+                            </div>
+                            <div className="right-block bordered">
+                                <p>МЕДИЧНА ДОКУМЕНТАЦІЯ</p>
+                                <h2><b>ФОРМА № 004/0</b></h2>
+                                <p>Затверджена наказом МОЗ України 26.07.99 р. № 184</p>
+                            </div>
+                        </div>
+                        <div className="bottom-block">
+                            <h1>ЛИСТОК ЛІКАРСЬКИХ ПРИЗНАЧЕНЬ</h1>
+                            <p>
+                                <span className="stat">Карта: №</span>
+                                <span>{ patientOptions.hospitalization }</span>
+                            </p>
+                            <p>
+                                <span className="stat">Прізвище, ім’я, по батькові хворого: </span>
+                                <span>{ patientOptions.name }</span>
+                            </p>
+                            <p>
+                                <span className="stat">Палата: №</span>
+                                <span>{ patientOptions.room }</span>
+                            </p>
+                            <p>
+                                <span className="stat">Дата: </span>
+                                { patientOptions.date }
+                            </p>
+                            <p>
+                                <span className="stat">День хвороби: </span>
+                                { patientOptions.day }
+                            </p>
+                        </div>
+                    </header>
+
                     <table cellSpacing="0" cellPadding="0">
                         <thead>
                             <tr>
@@ -323,7 +355,14 @@ CustomBarDIALabel
                         onComplete={() => this.completePDF}
                     >
                         {({ toPdf }) => (
-                            <Button icon="file-pdf" type="primary" className="to-pdf" onClick={toPdf}>PDF</Button>
+                            <Button 
+                                icon="file-pdf" 
+                                type="primary" 
+                                className="to-pdf" 
+                                onClick={toPdf}
+                            >
+                                PDF
+                            </Button>
                         )}
                     </ReactToPdf>
                 </div>
