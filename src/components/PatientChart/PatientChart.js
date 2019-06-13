@@ -1,5 +1,4 @@
-// Hospitalization Form Loader
-import React, { Component, PureComponent, Fragment } from 'react';
+import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as UI_ACTIONS from '../../redux/ui_actions';
@@ -26,7 +25,7 @@ const errorPDFDownloading = "Помилка завантаження PDF!";
 const errorLoadText = "Помилка з'єднання! Дані не завантажені!";
 const PDFOptions = {
     unit: 'px',
-    format: 'tabloid',
+    format: [935, 1015],
 };
 
 class PatientChart extends Component {
