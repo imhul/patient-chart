@@ -351,7 +351,7 @@ class PatientChart extends Component {
                         targetRef={ reff }
                         filename="patient-chart.pdf"
                         options={ PDFOptions }
-                        onComplete={() => this.completePDF}
+                        onComplete={() => this.completePDF()}
                     >
                         {({ toPdf }) => (
                             <Button 
