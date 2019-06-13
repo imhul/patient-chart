@@ -178,6 +178,7 @@ class PatientChart extends Component {
                                             width={740}
                                             height={352}
                                             vertical={false}
+                                            className="stroke-width"
                                             horizontalPoints={[0, 50, 100, 150, 200, 250]}
                                         />
                                         <XAxis dataKey="day" hide={true} />

@@ -139,6 +139,12 @@
                     bottom: 5px !important;
                     margin: 0 55px;
                 }
+                .recharts-cartesian-grid-horizontal {
+                    &>line {
+                        stroke-width: 1px !important;
+                        vector-effect: non-scaling-stroke !important;
+                    }
+                }
             }
         }
     }

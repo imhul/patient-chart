@@ -1,4 +1,4 @@
-# Patient Chart v.1.0.0
+# Patient Chart v.1.3.0
 
 ### by Tkachuk Zakhar
 
