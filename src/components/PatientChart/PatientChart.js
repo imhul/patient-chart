@@ -14,25 +14,18 @@ import {
     requestBody,
     requestURL,
     requestHeader,
+    CustomLabel,
+    CustomBarDIALabel,
+    CustomBarSYSLabel,
 } from '../../helpers';
 
-const ref = React.createRef();
+const reff = React.createRef();
 const successLoadText = "Дані успішно завантажені!";
 const successPDFDownloading = "PDF успішно завантажений!";
 const errorPDFDownloading = "Помилка завантаження PDF!";
 const errorLoadText = "Помилка з'єднання! Дані не завантажені!";
 const PDFOptions = {
     orientation: 'landscape',
-};
-
-class CustomLabel extends PureComponent {
-    render() {
-        const {
-            x, y, stroke, value,
-        } = this.props;
-    
-        return <text x={x} y={y} fill={stroke} dy={4} fontSize={10} textAnchor="middle">{value}</text>;
-    }
 };
 
 class PatientChart extends Component {
@@ -114,10 +107,10 @@ class PatientChart extends Component {
                 )
             })
         };
-
+CustomBarDIALabel
         return (
             <div className="PatientChart">
-                <div className="flex-container" ref={ ref }>
+                <div className="flex-container" ref={ reff }>
                     <div className="patient-info">
                     <div 
                         className="patient-name" 
@@ -167,14 +160,14 @@ class PatientChart extends Component {
                                             id="sys" 
                                             stackId="m" 
                                             fill="none" 
-                                            label={<CustomLabel />}
+                                            label={<CustomBarSYSLabel />}
                                         />
                                         <Bar 
                                             dataKey="dia" 
                                             id="dia" 
                                             stackId="m" 
                                             fill="#1890ff" 
-                                            label={<CustomLabel />}
+                                            label={<CustomBarDIALabel />}
                                         />
                                         <Legend 
                                             align="center" 
@@ -324,9 +317,9 @@ class PatientChart extends Component {
                     </table>
 
                     <ReactToPdf
-                        targetRef={ref}
+                        targetRef={ reff }
                         filename="patient-chart.pdf"
-                        options={PDFOptions}
+                        options={ PDFOptions }
                         onComplete={() => this.completePDF}
                     >
                         {({ toPdf }) => (
