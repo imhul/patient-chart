@@ -28,6 +28,12 @@ export default (state = initState, action) => {
                 isPDF: true,
             };
 
+        case type.PDF_RESET:
+            return { 
+                ...state,
+                isPDF: false,
+            };
+
         case type.LOAD_ERROR:
             return { 
                 ...state,

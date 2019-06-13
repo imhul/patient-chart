@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as UI_ACTIONS from '../../redux/ui_actions';
 import ReactToPdf from "react-to-pdf";
-import { Button, Icon, message, } from 'antd';
+import { Button, message, } from 'antd';
 import {
     Bar, Line, XAxis, YAxis, CartesianGrid, ComposedChart, Legend,
 } from 'recharts';
@@ -58,19 +58,17 @@ class PatientChart extends Component {
     };
 
     componentDidMount() {
-        this.loadAllData();  // First data loading
+        this.loadAllData();
     };
 
     completePDF = () => {
         this.props.uiActions.toPDF;
         message.success(successPDFDownloading, 3)
+        .then(() => this.props.uiActions.resetPDF)
     };
 
     render() {
-        // Props to constants
-        const { chartData, patientOptions, chartOptions } = this.props.ui;
-        const { uiActions } = this.props;
-
+        const { chartData, patientOptions, chartOptions, isPDF, } = this.props.ui;
         const DayTD = () => {
             let Switcher = false;
             return chartData.map(item => {
@@ -176,13 +174,11 @@ class PatientChart extends Component {
                                 <td colSpan="30" rowSpan="7" align="left" valign="bottom" className="pos-relative">
 
                                     <ComposedChart width={740} height={352} data={chartData}>
-                                        {/* Pressure */}
                                         <CartesianGrid
                                             width={740}
                                             height={352}
                                             vertical={false}
                                             horizontalPoints={[0, 50, 100, 150, 200, 250]}
-                                        // verticalPoints={[ 0, 125, 250, 375, 500, ]}
                                         />
                                         <XAxis dataKey="day" hide={true} />
                                         <YAxis hide={true} domain={[50, 250]} />
@@ -250,7 +246,6 @@ class PatientChart extends Component {
                                     </ComposedChart>
 
                                     <ComposedChart width={740} height={352} data={chartData} className="chart-with-no-bg">
-                                        {/* Temperatture */}
                                         <XAxis dataKey="day" hide={true} />
                                         <YAxis hide={true} domain={[34, 43]} />
                  
@@ -270,7 +265,6 @@ class PatientChart extends Component {
                                     </ComposedChart>
 
                                     <ComposedChart width={740} height={352} data={chartData} className="chart-with-no-bg">
-                                        {/* Pulse */}
                                         <XAxis dataKey="day" hide={true} />
                                         <YAxis hide={true} domain={[50, 150]} />
                                

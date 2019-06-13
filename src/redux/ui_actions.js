@@ -25,3 +25,11 @@ export function toPDF() {
     })
   }
 };
+
+export function resetPDF() {
+  return (dispatch) => {
+    dispatch({
+      type: type.PDF_RESET,
+    })
+  }
+};
