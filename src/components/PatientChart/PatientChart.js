@@ -68,7 +68,7 @@ class PatientChart extends Component {
     };
 
     render() {
-        const { chartData, patientOptions, chartOptions, isPDF, } = this.props.ui;
+        const { chartData, patientOptions, chartOptions, } = this.props.ui;
         const DayTD = () => {
             let Switcher = false;
             return chartData.map(item => {

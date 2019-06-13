@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import { requestBody, requestURL, requestHeader, } from './api';
-// import { buttonItemLayout, formItemLayout, typeDetector, } from './layoutTools';
 
 class CustomLabel extends PureComponent {
     render() {
