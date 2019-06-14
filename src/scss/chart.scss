@@ -36,7 +36,7 @@
                 }
                 .bottom-block {
                     padding: 15px;
-                    h1 {
+                    h3 {
                         text-align: center;
                     }
                 }
@@ -132,13 +132,13 @@
                 .padding-left {
                     padding: 4px 10px;
                 }
-                .recharts-legend-wrapper {
-                    width: 630px !important;
-                    height: auto !important;
-                    right: 5px !important;
-                    bottom: 5px !important;
-                    margin: 0 55px;
-                }
+                // .recharts-legend-wrapper {
+                //     width: 630px !important;
+                //     height: auto !important;
+                //     right: 5px !important;
+                //     bottom: 5px !important;
+                //     margin: 0 55px;
+                // }
                 .recharts-cartesian-grid-horizontal {
                     &>line {
                         stroke-width: 1px !important;

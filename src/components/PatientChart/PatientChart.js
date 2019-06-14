@@ -128,7 +128,7 @@ class PatientChart extends Component {
                             </div>
                         </div>
                         <div className="bottom-block">
-                            <h1>ЛИСТОК ЛІКАРСЬКИХ ПРИЗНАЧЕНЬ</h1>
+                            <h3>ЛИСТОК ЛІКАРСЬКИХ ПРИЗНАЧЕНЬ</h3>
                             <p>
                                 <span className="stat">Карта: №</span>
                                 <span>{ patientOptions.hospitalization }</span>
